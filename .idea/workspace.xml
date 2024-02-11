@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="870c5a0b-623f-4ab5-a212-3094b58412e4" name="Changes" comment="" />
+    <list default="true" id="870c5a0b-623f-4ab5-a212-3094b58412e4" name="Changes" comment="setup" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,6 +41,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "/home/b/bolles/IdeaProjects/Distributed-Systems",
     "node.js.detected.package.eslint": "true",
@@ -58,9 +59,9 @@
       <window_info id="Commit_Guest" show_stripe_button="false" />
       <window_info id="Pull Requests" show_stripe_button="false" />
       <window_info id="Learn" show_stripe_button="false" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.32982045" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.50113636" visible="true" weight="0.32982045" />
       <window_info id="Commit" order="1" weight="0.32982045" />
-      <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
+      <window_info active="true" id="Structure" order="2" sideWeight="0.49886364" side_tool="true" visible="true" weight="0.32982045" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="TypeScript" show_stripe_button="false" />
       <window_info anchor="bottom" id="Profiler" show_stripe_button="false" />
@@ -100,7 +101,7 @@
       <option name="presentableId" value="Default" />
       <updated>1707683672855</updated>
       <workItem from="1707683673952" duration="264000" />
-      <workItem from="1707683981282" duration="476000" />
+      <workItem from="1707683981282" duration="869000" />
     </task>
     <task id="LOCAL-00001" summary="setup">
       <option name="closed" value="true" />
@@ -110,7 +111,23 @@
       <option name="project" value="LOCAL" />
       <updated>1707683787225</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="setup">
+      <option name="closed" value="true" />
+      <created>1707684522026</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1707684522027</updated>
+    </task>
+    <task id="LOCAL-00003" summary="setup">
+      <option name="closed" value="true" />
+      <created>1707684630701</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1707684630701</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
