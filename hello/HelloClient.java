@@ -6,7 +6,7 @@ public class HelloClient {
 	
 	try {
 	  if (args.length < 2) {
-	   System.out.println("Usage: java HelloClient <rmiregistry host> <rmiregistry port>");
+	   System.out.println("Usage: ava HelloClient <rmiregistry host> <rmiregistry port>");
 	   return;}
 
 	String host = args[0];
