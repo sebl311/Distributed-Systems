@@ -1,5 +1,6 @@
 
 import java.rmi.*;
+import java.util.Vector;
 
 public  class ChatroomImpl implements Chatroom {
 
@@ -12,14 +13,22 @@ public  class ChatroomImpl implements Chatroom {
 	}
 
 	public Vector<Participant> join(Participant p)  throws RemoteException {
+		for(Participant p_i:participants){
+			p.add_Participant(p_i);
+		}
 		participants.add(p);
-        for(String s: history){
-            p.send(s);
-        }
+		for(Participant p_i:participants){
+			p_i.add_Participant(p);
+		}
+		System.out.println("Participant joined the conversation");
         return participants;
 	}
 
     public void leave(Participant p)  throws RemoteException {
 		participants.remove(p);
+		for(Participant p_i:participants){
+			p_i.remove_Participant(p);
+		}
+		System.out.println("Participant left the conversation");
 	}
 }

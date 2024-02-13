@@ -10,6 +10,7 @@ public  class HelloImpl implements Hello {
 	}
 
 	public String sayHello() throws RemoteException {
+		System.out.println(message);
 		return message ;
 	}
 }
