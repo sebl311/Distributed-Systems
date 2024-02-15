@@ -1,4 +1,3 @@
-import java.rmi.*;
 import java.rmi.registry.*;
 import java.rmi.server.UnicastRemoteObject;
 
@@ -20,13 +19,19 @@ public class ChatClient {
         Registry registry = LocateRegistry.getRegistry(host, port); 
         Chatroom c = (Chatroom) registry.lookup("Chatservice");
     
-        Participant p= new ParticipantImpl(name);
+        Participant p= new ParticipantImpl(name, c);
         Participant p_stub = (Participant) UnicastRemoteObject.exportObject(p, clientPort);
         
+        
+            
         // Remote method invocation
         c.join(p_stub);
-        Thread.sleep(50000);
+        Thread.sleep(10000);
+        p_stub.send("Hi");
         c.leave(p_stub);
+
+        System.exit(0);
+        
     
         } catch (Exception e)  {
     		System.err.println("Error on client: " + e);

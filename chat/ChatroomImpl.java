@@ -21,6 +21,7 @@ public  class ChatroomImpl implements Chatroom {
 			p_i.add_Participant(p);
 		}
 		System.out.println("Participant joined the conversation");
+		p.receiveHistory(history);
         return participants;
 	}
 
@@ -30,5 +31,10 @@ public  class ChatroomImpl implements Chatroom {
 			p_i.remove_Participant(p);
 		}
 		System.out.println("Participant left the conversation");
+	}
+
+	public void receive(String msg){
+		System.out.println(msg);
+		history.add(msg);
 	}
 }
