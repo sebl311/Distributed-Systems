@@ -20,7 +20,7 @@ public  class ChatroomImpl implements Chatroom {
 		for(Participant p_i:participants){
 			p_i.add_Participant(p);
 		}
-		System.out.println("Participant joined the conversation");
+		System.out.println(p.getName() + " joined the conversation");
 		p.receiveHistory(history);
         return participants;
 	}
@@ -30,7 +30,7 @@ public  class ChatroomImpl implements Chatroom {
 		for(Participant p_i:participants){
 			p_i.remove_Participant(p);
 		}
-		System.out.println("Participant left the conversation");
+		System.out.println(p.getName() + " left the conversation");
 	}
 
 	public void receive(String msg){
