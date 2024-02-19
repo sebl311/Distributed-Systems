@@ -84,7 +84,7 @@ public class ChatClient extends JFrame implements ActionListener {
             }
         } else if (e.getSource() == leaveButton) {
             try {
-                participantStub.remove_Participant(participantStub);
+                chatroom.leave(participantStub);
                 System.exit(0);
             } catch (Exception ex) {
                 ex.printStackTrace();

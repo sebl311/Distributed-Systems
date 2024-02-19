@@ -7,15 +7,12 @@
     <list default="true" id="870c5a0b-623f-4ab5-a212-3094b58412e4" name="Changes" comment="setup">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat/ChatClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/chat/ChatClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/ChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat/ChatClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/ChatServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/chat/ChatServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/Chatroom.class" beforeDir="false" afterPath="$PROJECT_DIR$/chat/Chatroom.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat/ChatroomImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/chat/ChatroomImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/ChatroomImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat/ChatroomImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/Participant.class" beforeDir="false" afterPath="$PROJECT_DIR$/chat/Participant.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/Participant.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat/Participant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/chat/ParticipantImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/chat/ParticipantImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/ParticipantImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/chat/ParticipantImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/bin/ChatClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/chat/bin/ChatClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/bin/ChatroomImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/chat/bin/ChatroomImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/bin/Participant.class" beforeDir="false" afterPath="$PROJECT_DIR$/chat/bin/Participant.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chat/bin/ParticipantImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/chat/bin/ParticipantImpl.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +124,7 @@
       <workItem from="1707683673952" duration="264000" />
       <workItem from="1707683981282" duration="1930000" />
       <workItem from="1707992367415" duration="11891000" />
-      <workItem from="1708286496767" duration="4991000" />
+      <workItem from="1708286496767" duration="10701000" />
     </task>
     <task id="LOCAL-00001" summary="setup">
       <option name="closed" value="true" />

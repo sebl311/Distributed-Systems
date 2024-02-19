@@ -43,9 +43,17 @@ public  class ParticipantImpl implements Participant {
 
 	public void send(String msg) throws RemoteException{
 		msg= name +": "+msg;
-		chatroom.receive(msg);
+		try {
+			chatroom.receive(msg);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		for(Participant p:participants){
-			p.receive(msg);
+			try {
+				p.receive(msg);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
