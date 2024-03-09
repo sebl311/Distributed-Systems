@@ -22,12 +22,17 @@ public class Participant {
         String queueName = channel.queueDeclare().getQueue();
         channel.queueBind(queueName, "handshake", "");
 
+        channel.exchangeDeclare("Ping", "direct", true);
+        String queueName1 = channel.queueDeclare().getQueue();
+        channel.queueBind(queueName1, "Ping", "");
+
+        channel.exchangeDeclare("Pong", "direct", true);
+        String queueName2 = channel.queueDeclare().getQueue();
+        channel.queueBind(queueName2, "Pong", "");
+
         System.out.println(ID+": Waiting for messages. To exit press CTRL+C");
 
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-            channel.queueDeclare("Ping", false, false, false, null);
-            channel.queueDeclare("Pong", false, false, false, null);
-
             //Parsing Message of Syntax "TYPE(VAL)" into type and value
             String message = new String(delivery.getBody(), "UTF-8");
             String messageType= message.substring(0,message.indexOf('('));
@@ -50,7 +55,7 @@ public class Participant {
                 channel.basicPublish("handshake", "", null, newMessage.getBytes("UTF-8"));
                 System.out.println(ID + " Send: " + newMessage);
                 try{
-                    listenForPing(channel, ID);
+                    listenForPing(channel, ID, queueName1);
                 } catch(Exception e){
                     System.out.println("Error in listening for PING");
                     e.printStackTrace(System.out);
@@ -67,7 +72,7 @@ public class Participant {
                 channel.basicPublish("Ping", "", null, "PING".getBytes("UTF-8"));
                 System.out.println(ID + " Send: Ping");
                 try{
-                    listenForPong(channel, ID);
+                    listenForPong(channel, ID, queueName2);
                 } catch(Exception e){
                     System.out.println("Error in listening for PONG");
                     e.printStackTrace(System.out);
@@ -78,27 +83,33 @@ public class Participant {
   
     }
 
-    public static void listenForPing(Channel channel, int ID) throws Exception{
+    public static void listenForPing(Channel channel, int ID, String queueName) throws Exception{
         DeliverCallback deliverCallbackPing = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
             if(message.equals("PING")){
                 System.out.println(ID + " Received PING");
+                try{
+                    Thread.sleep(1000);
+                }catch(Exception e){}
                 channel.basicPublish("Pong", "", null, "PONG".getBytes("UTF-8"));
                 System.out.println(ID + " Send: Pong");
             }
         };
-        channel.basicConsume("Ping", true, deliverCallbackPing, consumerTag -> { });
+        channel.basicConsume(queueName, true, deliverCallbackPing, consumerTag -> { });
     }
 
-    public static void listenForPong(Channel channel, int ID) throws Exception{
+    public static void listenForPong(Channel channel, int ID, String queueName) throws Exception{
         DeliverCallback deliverCallbackPong = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
             if(message.equals("PONG")){
                 System.out.println(ID + " Received PONG");
+                try{
+                    Thread.sleep(1000);
+                }catch(Exception e){}
                 channel.basicPublish("Ping", "", null, "PING".getBytes("UTF-8"));
                 System.out.println(ID + " Send: Ping");
             }
         };
-        channel.basicConsume("Pong", true, deliverCallbackPong, consumerTag -> { });
+        channel.basicConsume(queueName, true, deliverCallbackPong, consumerTag -> { });
     }
 }
