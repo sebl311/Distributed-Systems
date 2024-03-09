@@ -50,9 +50,11 @@ public class Participant {
             } else if(messageType.equals("OK_CON")&& ID!=messageVal){
                 stateWrapper.value="STARTED";
                 channel.basicPublish("Ping", "", null, "PING".getBytes("UTF-8"));
-                //listen for PONG
-                listenForPong(channel, ID);
-
+                try{
+                    listenForPong(channel, ID);
+                }catch(Exception e){
+                    System.out.println("Error in listening for PONG");
+                }
             } 
 
             System.out.println(ID + " Received type: " + messageType + " with value: "+ messageVal);
