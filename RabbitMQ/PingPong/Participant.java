@@ -18,6 +18,8 @@ public class Participant {
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
+        channel.queueDeclare("Ping", false, false, false, null);
+        channel.queueDeclare("Pong", false, false, false, null);
         channel.exchangeDeclare("handshake", "fanout");
         String queueName = channel.queueDeclare().getQueue();
         channel.queueBind(queueName, "handshake", "");
@@ -37,10 +39,36 @@ public class Participant {
                 stateWrapper.value="WAITING";
                 String newMessage = "INIT_CON("+ID+")";
                 channel.basicPublish("handshake", "", null, newMessage.getBytes("UTF-8"));
-            }else if(messageType.equals("INIT_CON")&&)
+            }else if(messageType.equals("INIT_CON")&& ID<messageVal){
+                stateWrapper.value="STARTED";
+                String newMessage = "OK_CON("+ID+")";
+                channel.basicPublish("handshake", "", null, newMessage.getBytes("UTF-8"));
+            } else if(messageType.equals("INIT_CON")&& ID>messageVal && stateWrapper.value.equals("IDLE")){
+                stateWrapper.value="WAITING";
+                String newMessage = "INIT_CON("+ID+")";
+                channel.basicPublish("handshake", "", null, newMessage.getBytes("UTF-8"));
+            } else if(messageType.equals("OK_CON")&& ID!=messageVal){
+                stateWrapper.value="STARTED";
+                channel.basicPublish("Ping", "", null, "PING".getBytes("UTF-8"));
+                //listen for PONG
+                listenForPong(channel, ID);
+
+            } 
+
             System.out.println(ID + " Received type: " + messageType + " with value: "+ messageVal);
         };
         channel.basicConsume(queueName, true, deliverCallback, consumerTag -> { });
   
+    }
+
+    public static void listenForPong(Channel channel, int ID) throws Exception{
+        DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+            String message = new String(delivery.getBody(), "UTF-8");
+            if(message.equals("PONG")){
+                System.out.println(ID + " Received PONG");
+                channel.basicPublish("Ping", "", null, "PING".getBytes("UTF-8"));
+            }
+        };
+        channel.basicConsume("Pong", true, deliverCallback, consumerTag -> { });
     }
 }

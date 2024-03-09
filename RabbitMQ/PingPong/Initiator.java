@@ -6,7 +6,6 @@ import com.rabbitmq.client.Channel;
 
 public class Initiator {
 
-  
     public static void main(String[] argv) throws Exception {
 
         int starter = Integer.parseInt(argv[0]);
