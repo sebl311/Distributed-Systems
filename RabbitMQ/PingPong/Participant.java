@@ -43,6 +43,11 @@ public class Participant {
                 stateWrapper.value="STARTED";
                 String newMessage = "OK_CON("+ID+")";
                 channel.basicPublish("handshake", "", null, newMessage.getBytes("UTF-8"));
+                try{
+                    listenForPing(channel, ID);
+                } catch(Exception e){
+                    System.out.println("Error in listening for PING");
+                }
             } else if(messageType.equals("INIT_CON")&& ID>messageVal && stateWrapper.value.equals("IDLE")){
                 stateWrapper.value="WAITING";
                 String newMessage = "INIT_CON("+ID+")";
@@ -52,7 +57,7 @@ public class Participant {
                 channel.basicPublish("Ping", "", null, "PING".getBytes("UTF-8"));
                 try{
                     listenForPong(channel, ID);
-                }catch(Exception e){
+                } catch(Exception e){
                     System.out.println("Error in listening for PONG");
                 }
             } 
@@ -61,6 +66,17 @@ public class Participant {
         };
         channel.basicConsume(queueName, true, deliverCallback, consumerTag -> { });
   
+    }
+
+    public static void listenForPing(Channel channel, int ID) throws Exception{
+        DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+            String message = new String(delivery.getBody(), "UTF-8");
+            if(message.equals("PING")){
+                System.out.println(ID + " Received PING");
+                channel.basicPublish("Pong", "", null, "PONG".getBytes("UTF-8"));
+            }
+        };
+        channel.basicConsume("Ping", true, deliverCallback, consumerTag -> { });
     }
 
     public static void listenForPong(Channel channel, int ID) throws Exception{
