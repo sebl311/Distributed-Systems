@@ -39,7 +39,9 @@ public class Participant {
             int messageVal=-1;
             try{
                 messageVal=Integer.parseInt(message.substring(message.indexOf('(')+1, message.indexOf(')')));
-            }catch (NumberFormatException e){}
+            }catch (NumberFormatException e){
+                e.printStackTrace(System.out);
+            }
             
             if(messageType.equals("START")&&messageVal==ID&&stateWrapper.value.equals("IDLE")){
                 System.out.println(ID + " Received type: " + messageType + " with value: "+ messageVal);
@@ -90,7 +92,9 @@ public class Participant {
                 System.out.println(ID + " Received PING");
                 try{
                     Thread.sleep(1000);
-                }catch(Exception e){}
+                }catch(Exception e){
+                    e.printStackTrace(System.out);
+                }
                 channel.basicPublish("Pong", "", null, "PONG".getBytes("UTF-8"));
                 System.out.println(ID + " Send: Pong");
             }
@@ -105,7 +109,9 @@ public class Participant {
                 System.out.println(ID + " Received PONG");
                 try{
                     Thread.sleep(1000);
-                }catch(Exception e){}
+                }catch(Exception e){
+                    e.printStackTrace(System.out);
+                }
                 channel.basicPublish("Ping", "", null, "PING".getBytes("UTF-8"));
                 System.out.println(ID + " Send: Ping");
             }
