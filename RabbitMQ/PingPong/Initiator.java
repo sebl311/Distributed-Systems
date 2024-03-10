@@ -15,13 +15,14 @@ public class Initiator {
             Channel channel = connection.createChannel()) {
             channel.exchangeDeclare("handshake", "fanout");
   
+            //Normal excecution
             String message = "START("+starter+")";
             channel.basicPublish("handshake", "", null, message.getBytes("UTF-8"));
             System.out.println(" Initiator Sent '" + message + "'");
 
             /* 
             String message1 = "START(1)";
-            String message2 = "START(1)";
+            String message2 = "START(2)";
   
             channel.basicPublish("handshake", "", null, message1.getBytes("UTF-8"));
             System.out.println(" Initiator Sent '" + message1 + "'");
