@@ -1,5 +1,3 @@
-package Overlay;
-
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
@@ -7,19 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class Node {
     private int ID;
     private Node leftNode;
     private Node rightNode;
-    final List<String> physicalConnections;
-    private Map<Integer, Node> routingTable = new HashMap<Integer, Node>();
+    final List<Integer> physicalConnections;
+    private Map<Integer, Integer> routingTable = new HashMap<Integer, Integer>();
+    private Map<Integer, Integer> distanceVector = new HashMap<Integer, Integer>();
     
     // RabbitMQ connection
     private Connection connection;
     private Channel channel;
     private String queueName;
 
-    public Node(int ID, List<String> physicalConnections){
+    public Node(int ID, List<Integer> physicalConnections){
         this.ID = ID;
         this.physicalConnections = physicalConnections;
         setupRabbitMQConnection();
@@ -29,7 +29,7 @@ public class Node {
     public int getID() { return ID; }
     public Node getLeftNode(){ return leftNode; }
     public Node getRightNode(){ return rightNode; }
-    public List<String> getPhysicalConnections(){ return physicalConnections; }
+    public List<Integer> getPhysicalConnections(){ return physicalConnections; }
 
     //setters
     public void setLeftNode(Node leftNode){ this.leftNode = leftNode; }
@@ -51,37 +51,45 @@ public class Node {
 
     }
 
-    public void addRoutingTableEntry(int destinationID, Node nextHop){
+    public void addRoutingTableEntry(int destinationID, int nextHop){
         routingTable.put(destinationID, nextHop);
     }
 
-    public Node getNextHop(int destinationID){
+    public int getNextHop(int destinationID){
         return routingTable.get(destinationID);
     }
 
-    public void buildRoutingTable(int[][] matrix){
-        
-        for(int i = 0; i < matrix.length; i++){
-            if(matrix[ID][i] == 1){
-                addRoutingTableEntry(i, this);
-            } else {
-                addRoutingTableEntry(i, null);
-            }
+    public void buildRoutingTable(int[][] matrix){        
+        for(Integer connection : physicalConnections){
+            routingTable.put(connection, connection);
+            distanceVector.put(connection, 1);
+        }
+        for(Integer connection : physicalConnections){
+            Message message = new Message(MessageType.ROUTING, null, connection, this.ID, distanceVector);
+            sendRoutingMessage(message);
         }
 
-        //TODO djiikstra's algorithm here
-        
+        System.out.println("-------------------------------------");
+        System.out.println("Node [" + this.ID + "] Routing Table:");
 
-        System.out.println("[" + this.ID + "] Routing Table:");
-
-        for(Map.Entry<Integer, Node> entry : routingTable.entrySet()){
-            System.out.println("Destination: " + entry.getKey() + " Next Hop: " + entry.getValue().getID());
+        for(Map.Entry<Integer, Integer> entry : routingTable.entrySet()){
+            System.out.println("Destination: " + entry.getKey() + " Next Hop: " + entry.getValue());
         }
+        System.out.println("-------------------------------------");
     }
 
+    public void sendRoutingMessage(Message message){
+        try{
+            String queue = "node_" + message.getDestinationID();
+            channel.basicPublish("", queue, null, message.toString().getBytes());
+            System.out.println("[" + this.ID +"] Sent routing message to right node: " + rightNode.getID());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public void sendLeft(String message){
         try {
-            //TODO send a new message to left neigbor via next hop in routing table
+
             // if (leftNode != null) {
             //     //check if left node is in physical connections
             //     if(physicalConnections.contains(leftNode.getID() + "")){
@@ -107,7 +115,6 @@ public class Node {
     }
 
     public void sendRight(String message){
-        //TODO send a new message to right neigbor via next hop in routing table
         try{
             if(rightNode != null){
                 String rightQueueName = "node_" + rightNode.getID();
@@ -122,10 +129,12 @@ public class Node {
     }
 
     public void receive(){
-        //TODO check destination ID of message if equal to ours or if redirect
         try{
             channel.basicConsume(queueName, true, (consumerTag, delivery) -> {
-                String message = new String(delivery.getBody(), "UTF-8");
+                String m = new String(delivery.getBody(), "UTF-8");
+                Message message = new Message(m);
+                //SWITCH BETWEEN THE MESSAGE TYPES
+                message.getMessageType();
                 System.out.println("[" + this.ID +"] Received '" + message + "'");
             }, consumerTag -> {});
         } catch (Exception e) {
