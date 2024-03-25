@@ -1,4 +1,3 @@
-package Overlay;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,11 +8,11 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         int[][] matrix = {
-            {0, 1, 0, 1},
-            {1, 0, 1, 0},
-            {0, 1, 0, 0},
-            {0, 0, 1, 1},
-            {1, 0, 0, 0}
+            {0, 0, 1, 0, 0},
+            {0, 0, 1, 1, 1},
+            {1, 1, 0, 0, 0},
+            {0, 1, 0, 0, 0},
+            {0, 1, 0, 0, 0}
         };
 
         Initializer initializer = new Initializer(matrix);
@@ -21,8 +20,11 @@ public class Main {
 
         for(Node node : nodesCreated){
             System.out.println("Node ID: " + node.getID());
-            System.out.println("Physical Connections: " + node.getPhysicalConnections());
-            System.out.println("Left Node: " + node.getLeftNode().getID());
+            System.out.println("Physical Connections: ");
+            for(String connection : node.getPhysicalConnections()){
+                System.out.print(connection + " ");
+            }
+            System.out.println("\nLeft Node: " + node.getLeftNode().getID());
             System.out.println("Right Node: " + node.getRightNode().getID());
             System.out.println();
         }
