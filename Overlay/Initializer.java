@@ -1,4 +1,4 @@
-package Overlay;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ public class Initializer {
         for(int i = 0; i < matrix.length; i++){
             for(int j = 0; j < matrix[i].length; j++){
                 if(matrix[i][j] == 1){
-                    nodes.get(i).getPhysicalConnections().add(nodes.get(j).getID()+"");
+                    nodes.get(i).getPhysicalConnections().add(nodes.get(j).getID());
                 }
             }
             nodes.get(i).buildRoutingTable(matrix);
