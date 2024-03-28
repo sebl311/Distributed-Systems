@@ -15,12 +15,13 @@ public class Initializer {
         createNodes();
         connectNodes();
         formRing();
+        buildRoutingTable();
         return nodes;
     }
 
     private void createNodes(){
         for(int i = 0; i < matrix.length; i++){
-            Node newNode = new Node(i, new ArrayList<>());
+            Node newNode = new Node(i, new ArrayList<>(),matrix.length);
             nodes.add(newNode);
         }
     }
@@ -32,7 +33,16 @@ public class Initializer {
                     nodes.get(i).getPhysicalConnections().add(nodes.get(j).getID());
                 }
             }
+        }
+    }
+
+    private void buildRoutingTable(){
+        for(int i = 0; i < nodes.size(); i++){
             nodes.get(i).buildRoutingTable(matrix);
+        }
+        //print routing tables
+        for(int i = 0; i < nodes.size(); i++){
+            nodes.get(i).printRoutingTable();
         }
     }
 
