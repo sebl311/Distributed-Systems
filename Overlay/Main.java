@@ -14,6 +14,11 @@ public class Main {
             {0, 1, 0, 0, 0},
             {0, 1, 0, 0, 0}
         };
+        // int[][] matrix = {
+        //     {0, 1, 0},
+        //     {1, 0, 1},
+        //     {0, 1, 0}
+        // };
 
         Initializer initializer = new Initializer(matrix);
         List<Node> nodesCreated = initializer.initialize();
@@ -21,7 +26,7 @@ public class Main {
         for(Node node : nodesCreated){
             System.out.println("Node ID: " + node.getID());
             System.out.println("Physical Connections: ");
-            for(String connection : node.getPhysicalConnections()){
+            for(Integer connection : node.getPhysicalConnections()){
                 System.out.print(connection + " ");
             }
             System.out.println("\nLeft Node: " + node.getLeftNode().getID());
